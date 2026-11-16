@@ -23,6 +23,23 @@ describe('AppController (e2e)', () => {
       .expect('Hello World!');
   });
 
+  it('/travel (GET)', () => {
+    return request(app.getHttpServer())
+      .get('/travel')
+      .expect(200)
+      .expect([
+        { id: 1, name: 'To China', price: 1000 },
+        { id: 2, name: 'To Morocco', price: 1200 },
+      ]);
+  });
+
+  it('/travel/:id (GET)', () => {
+    return request(app.getHttpServer())
+      .get('/travel/1')
+      .expect(200)
+      .expect({ id: 1, name: 'To China', price: 1000 });
+  });
+
   afterEach(async () => {
     await app.close();
   });
